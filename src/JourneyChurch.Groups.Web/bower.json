@@ -1,0 +1,10 @@
+{
+	"name": "ASP.NET",
+	"private": true,
+  "dependencies": {
+    "angularjs": "1.2.28",
+    "angular-route": "1.2.28",
+    "angular-resource": "1.2.28",
+    "components-font-awesome": "4.4.0"
+  }
+}

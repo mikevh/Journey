@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body ng-controller="ctrl">
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Done</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="t in todos">
+                <td>{{t.Title}}</td>
+                <td><i class="fa" ng-class="{'fa-square-o': !t.IsDone, 'fa-check-square-o': t.IsDone}" ng-click="toggleDone(t)"></i></td>
+            </tr>
+        </tbody>
+    </table>
+    <script src="/lib/angularjs/angular.min.js"></script>
+    <script src="/lib/angular-route/angular-route.min.js"></script>
+    <script>
+        var app = angular.module('app', ['ngRoute']);
+    </script>
+<script>
+    // TODO: datacontractresolver
+    app.controller('ctrl', function ($scope, $http) {
+        $scope.toggleDone = function (t) {
+            t.IsDone = !t.IsDone;
+            $http.put('/api/todo/' + t.Id, t).success(function (data) {
+                t = data;
+            });
+        };
+
+        $http.get('/api/todo').success(function(data) {
+            $scope.todos = data;
+        });
+    });
+</script>
+</body>
+</html>

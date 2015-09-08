@@ -61,5 +61,19 @@ namespace JourneyChurch.Groups.Web.Controllers
 
             return HttpNotFound();
         }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(string id, [FromBody]TodoItem item) {
+            if (item == null) {
+                return HttpBadRequest();
+            }
+            var todo = _repository.Get(item.Id);
+            if (todo == null) {
+                return HttpNotFound();
+            }
+
+            _repository.Update(item);
+            return new ObjectResult(item);
+        }
     }
 }

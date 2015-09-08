@@ -12,21 +12,28 @@ namespace JourneyChurch.Groups.Web.Repositories
         void Add(TodoItem item);
         TodoItem Get(int id);
         bool Delete(int id);
+        void Update(TodoItem item);
     }
 
     public class TodoRepository : ITodoRepository
     {
-        private readonly List<TodoItem> _items = new List<TodoItem>();
+        private readonly Dictionary<int, TodoItem> _items = new Dictionary<int,TodoItem>();
         private int _identity = 0;
 
-        public IEnumerable<TodoItem> All { get { return _items; } }
+        public TodoRepository()
+        {
+            Add(new TodoItem {Title = "hello"});
+        }
+
+        public IEnumerable<TodoItem> All => _items.Values;
+
         public void Add(TodoItem item) {
             item.Id = ++_identity;
-            _items.Add(item);
+            _items[item.Id] = item;
         }
 
         public TodoItem Get(int id) {
-            return _items.FirstOrDefault(x => x.Id == id);
+            return _items[id];
         }
 
         public bool Delete(int id) {
@@ -34,8 +41,12 @@ namespace JourneyChurch.Groups.Web.Repositories
             if (item == null) {
                 return false;
             }
-            _items.Remove(item);
+            _items.Remove(id);
             return true;
+        }
+
+        public void Update(TodoItem item) {
+            _items[item.Id] = item;
         }
     }
 }
