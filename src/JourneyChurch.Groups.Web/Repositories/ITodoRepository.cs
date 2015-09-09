@@ -23,6 +23,8 @@ namespace JourneyChurch.Groups.Web.Repositories
         public TodoRepository()
         {
             Add(new TodoItem {Title = "hello"});
+            Add(new TodoItem {Title = "foobar"});
+            
         }
 
         public IEnumerable<TodoItem> All => _items.Values;

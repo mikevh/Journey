@@ -17,10 +17,15 @@
         </thead>
         <tbody>
             <tr ng-repeat="t in todos">
-                <td>{{t.Id}}</td>
-                <td>{{t.Title}}</td>
-                <td><i class="fa" ng-class="{'fa-square-o': !t.IsDone, 'fa-check-square-o': t.IsDone}" ng-click="toggleDone(t)"></i></td>
-                <td><i class="fa fa-ban" ng-show="t.IsDone" ng-click="remove(t)"></i></td>
+                <td>{{t.id}}</td>
+                <td ng-click="openEdit(t)" ng-show="!t.isEditing">{{t.title}}</td>
+                <td ng-show="t.isEditing">
+                    <input type="text" ng-model="t.title" />
+                    <i style="padding: 10px;" class="fa fa-save" ng-click="saveEdit(t)"></i>
+                    <i style="padding: 10px;" class="fa fa-close" ng-click="cancelEdit(t)"></i>
+                </td>
+                <td><i class="fa" ng-class="{'fa-square-o': !t.isDone, 'fa-check-square-o': t.isDone}" ng-click="toggleDone(t)"></i></td>
+                <td><i class="fa fa-ban" ng-show="t.isDone" ng-click="remove(t)"></i></td>
             </tr>
             <tr ng-if="todos.length == 0">
                 <td>None</td>
@@ -29,8 +34,14 @@
     </table>
     <table>
         <tr>
-            <td ng-show="!showNewTodo"><i class="fa fa-plus" ng-click="add()" /></td>
-            <td ng-show="showNewTodo"><input type="text" ng-model="n.Title"/><i class="fa fa-save" ng-click="saveNew()"/><i class="fa fa-close" ng-click="cancelNew()"></i></td>
+            <td ng-show="!showNewTodo">
+                <i class="fa fa-plus" ng-click="add()"></i>
+            </td>
+            <td ng-show="showNewTodo">
+                <input type="text" ng-model="n.title" />
+                <i style="padding: 10px;" class="fa fa-save" ng-click="saveNew()"></i>
+                <i style="padding: 10px;" class="fa fa-close" ng-click="cancelNew()"></i>
+            </td>
         </tr>
     </table>
     <script src="/lib/angularjs/angular.min.js"></script>
@@ -38,39 +49,45 @@
     <script src="/lib/angular-resource/angular-resource.min.js"></script>
     <script>
         var app = angular.module('app', ['ngRoute', 'ngResource']);
-    </script>
-    <script>
-        // TODO: datacontractresolver
 
         app.factory('ttt', function ($resource) {
-            return $resource('/api/todo/:id', { id: '@Id' }, {
-                'update': { method: 'PUT' }
-            }
+            return $resource('/api/todo/:id', { id: '@id' }, { 'update': { method: 'PUT' } }
             );
         });
 
         app.controller('ctrl', function ($scope, ttt) {
 
-            $scope.showNewTodo = false;
-
             $scope.saveNew = function () {
                 var entry = new ttt();
                 angular.extend(entry, $scope.n);
-                entry.$save().then(function(data) {
+                entry.$save().then(function (data) {
                     $scope.todos.push(data);
-                }, function(err) {
-                    console.log(err);
+                    $scope.cancelNew();
                 });
             };
 
-            $scope.cancelNew = function() {
+            $scope.cancelNew = function () {
                 $scope.showNewTodo = false;
             };
 
+            $scope.saveEdit = function (t) {
+                t.$update().then(function () {
+                    t.isEditing = false;
+                });
+            };
+
+            $scope.cancelEdit = function (t) {
+                t.title = t.previousTitle;
+                t.isEditing = false;
+            };
+
+            $scope.openEdit = function (t) {
+                t.previousTitle = t.title;
+                t.isEditing = true;
+            };
+
             $scope.add = function () {
-                $scope.n = {
-                    Title: ''
-                };
+                $scope.n = { title: '' };
                 $scope.showNewTodo = true;
             };
 
@@ -82,7 +99,7 @@
             }
 
             $scope.toggleDone = function (t) {
-                t.IsDone = !t.IsDone;
+                t.isDone = !t.isDone;
                 t.$update();
             }
 

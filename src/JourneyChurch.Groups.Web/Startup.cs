@@ -8,10 +8,12 @@ using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
 using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 
 namespace JourneyChurch.Groups.Web
 {
@@ -32,7 +34,9 @@ namespace JourneyChurch.Groups.Web
 
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services) {
-            services.AddMvc();
+            services.AddMvc(options => {
+                options.OutputFormatters.OfType<JsonOutputFormatter>().First().SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
             services.AddSingleton<ITodoRepository, TodoRepository>();
 
             services.AddEntityFramework()
