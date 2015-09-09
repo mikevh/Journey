@@ -34,22 +34,20 @@ namespace JourneyChurch.Groups.Web.Controllers
         }
 
         [HttpPost]
-        public void CreateTodoItem([FromBody] TodoItem item)
+        public IActionResult CreateTodoItem([FromBody] TodoItem item)
         {
-            if (!ModelState.IsValid)
-            {
-                Context.Response.StatusCode = 400;
+            if (!ModelState.IsValid) {
+                return new HttpStatusCodeResult(400);
             }
-            else
-            {
-                _repository.Add(item);
+            _repository.Add(item);
 
-                string url = Url.RouteUrl("GetByIdRoute", new { id = item.Id },
-                    Request.Scheme, Request.Host.ToUriComponent());
+            string url = Url.RouteUrl("GetByIdRoute", new { id = item.Id },
+                Request.Scheme, Request.Host.ToUriComponent());
 
-                Context.Response.StatusCode = 201;
-                Context.Response.Headers["Location"] = url;
-            }
+            Context.Response.StatusCode = 201;
+            Context.Response.Headers["Location"] = url;
+            return new ObjectResult(item);
+            
         }
 
         [HttpDelete("{id}")]
@@ -63,7 +61,7 @@ namespace JourneyChurch.Groups.Web.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(string id, [FromBody]TodoItem item) {
+        public IActionResult Update(int id, [FromBody]TodoItem item) {
             if (item == null) {
                 return HttpBadRequest();
             }

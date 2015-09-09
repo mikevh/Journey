@@ -4,7 +4,7 @@
     module.factory('ResourceGenerator', ['$resource', function ($resource) {
         var get_resource = function (url) {
             var res = $resource(url, null, {
-                'update': { method: 'PUT', url: url + '/foo' },
+                'update': { method: 'PUT' },
                 'insert': { method: 'POST' },
                 //'updatevalidate': { method: 'PUT', headers: { 'validation_only': 'true' } },
                 //'insertvalidate': { method: 'POST', headers: { 'validation_only': 'true' } }

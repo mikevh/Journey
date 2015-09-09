@@ -9,36 +9,87 @@
     <table>
         <thead>
             <tr>
+                <th>Id</th>
                 <th>Title</th>
                 <th>Done</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="t in todos">
+                <td>{{t.Id}}</td>
                 <td>{{t.Title}}</td>
                 <td><i class="fa" ng-class="{'fa-square-o': !t.IsDone, 'fa-check-square-o': t.IsDone}" ng-click="toggleDone(t)"></i></td>
+                <td><i class="fa fa-ban" ng-show="t.IsDone" ng-click="remove(t)"></i></td>
+            </tr>
+            <tr ng-if="todos.length == 0">
+                <td>None</td>
             </tr>
         </tbody>
     </table>
+    <table>
+        <tr>
+            <td ng-show="!showNewTodo"><i class="fa fa-plus" ng-click="add()" /></td>
+            <td ng-show="showNewTodo"><input type="text" ng-model="n.Title"/><i class="fa fa-save" ng-click="saveNew()"/><i class="fa fa-close" ng-click="cancelNew()"></i></td>
+        </tr>
+    </table>
     <script src="/lib/angularjs/angular.min.js"></script>
     <script src="/lib/angular-route/angular-route.min.js"></script>
+    <script src="/lib/angular-resource/angular-resource.min.js"></script>
     <script>
-        var app = angular.module('app', ['ngRoute']);
+        var app = angular.module('app', ['ngRoute', 'ngResource']);
     </script>
-<script>
-    // TODO: datacontractresolver
-    app.controller('ctrl', function ($scope, $http) {
-        $scope.toggleDone = function (t) {
-            t.IsDone = !t.IsDone;
-            $http.put('/api/todo/' + t.Id, t).success(function (data) {
-                t = data;
-            });
-        };
+    <script>
+        // TODO: datacontractresolver
 
-        $http.get('/api/todo').success(function(data) {
-            $scope.todos = data;
+        app.factory('ttt', function ($resource) {
+            return $resource('/api/todo/:id', { id: '@Id' }, {
+                'update': { method: 'PUT' }
+            }
+            );
         });
-    });
-</script>
+
+        app.controller('ctrl', function ($scope, ttt) {
+
+            $scope.showNewTodo = false;
+
+            $scope.saveNew = function () {
+                var entry = new ttt();
+                angular.extend(entry, $scope.n);
+                entry.$save().then(function(data) {
+                    $scope.todos.push(data);
+                }, function(err) {
+                    console.log(err);
+                });
+            };
+
+            $scope.cancelNew = function() {
+                $scope.showNewTodo = false;
+            };
+
+            $scope.add = function () {
+                $scope.n = {
+                    Title: ''
+                };
+                $scope.showNewTodo = true;
+            };
+
+            $scope.remove = function (t) {
+                t.$delete().then(function () {
+                    var index = $scope.todos.indexOf(t);
+                    $scope.todos.splice(index, 1);
+                });
+            }
+
+            $scope.toggleDone = function (t) {
+                t.IsDone = !t.IsDone;
+                t.$update();
+            }
+
+            ttt.query().$promise.then(function (data) {
+                $scope.todos = data;
+            });
+        });
+    </script>
 </body>
 </html>
