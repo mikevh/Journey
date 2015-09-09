@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body ng-controller="ctrl">
+    <table>
+        <thead>
+            <tr>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="u in users">
+               
+            </tr>
+            <tr ng-if="users.length == 0">
+                <td>None</td>
+            </tr>
+        </tbody>
+    </table>
+    <!--<table>
+        <tr>
+            <td ng-show="!showNewTodo">
+                <i class="fa fa-plus" ng-click="add()"></i>
+            </td>
+            <td ng-show="showNewTodo">
+                <input type="text" ng-model="n.title" />
+                <i style="padding: 10px;" class="fa fa-save" ng-click="saveNew()"></i>
+                <i style="padding: 10px;" class="fa fa-close" ng-click="cancelNew()"></i>
+            </td>
+        </tr>
+    </table>-->
+    <script src="/lib/angularjs/angular.min.js"></script>
+    <script src="/lib/angular-route/angular-route.min.js"></script>
+    <script src="/lib/angular-resource/angular-resource.min.js"></script>
+    <script>
+        var app = angular.module('app', ['ngRoute', 'ngResource']);
+
+        app.factory('Users', function ($resource) {
+            return $resource('/api/users/:id', { id: '@id' }, { 'update': { method: 'PUT' } }
+            );
+        });
+
+        app.controller('ctrl', function ($scope, Users) {
+
+            Users.query().$promise.then(function (data) {
+                $scope.users = data;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -9,11 +9,13 @@
     "Microsoft.AspNet.Mvc": "6.0.0-beta7",
     "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta7",
     "Microsoft.Framework.Configuration.Json": "1.0.0-beta7",
-    "Microsoft.AspNet.StaticFiles": "1.0.0-beta7"
+    "Microsoft.AspNet.StaticFiles": "1.0.0-beta7",
+    "EntityFramework.Commands": "7.0.0-beta7",
   },
 
   "commands": {
-    "web": "Microsoft.AspNet.Hosting --config hosting.ini" 
+    "web": "Microsoft.AspNet.Hosting --config hosting.ini",
+    "ef": "EntityFramework.Commands"
   },
 
   "frameworks": {
