@@ -37,7 +37,7 @@ namespace JourneyChurch.Groups.Web
             services.AddMvc(options => {
                 options.OutputFormatters.OfType<JsonOutputFormatter>().First().SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
-            services.AddSingleton<ITodoRepository, TodoRepository>();
+            services.AddScoped<ITodoRepository, TodoRepository>();
 
             services.AddEntityFramework()
                 .AddSqlServer()

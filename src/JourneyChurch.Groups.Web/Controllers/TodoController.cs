@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using JourneyChurch.Groups.Web.Models;
 using JourneyChurch.Groups.Web.Repositories;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Data.Entity;
 
 namespace JourneyChurch.Groups.Web.Controllers
 {
@@ -14,14 +15,15 @@ namespace JourneyChurch.Groups.Web.Controllers
     {
         private readonly ITodoRepository _repository;
 
-        public TodoController(ITodoRepository repository)
-        {
+        // todo: use view models
+        public TodoController(ITodoRepository repository) {
             _repository = repository;
         }
 
         [HttpGet]
         public IEnumerable<TodoItem> GetAll() {
-            return _repository.All;
+            var rv = _repository.All;
+            return rv;
         }
 
         [HttpGet("{id:int}", Name = "GetByIdRoute")]
@@ -62,14 +64,6 @@ namespace JourneyChurch.Groups.Web.Controllers
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody]TodoItem item) {
-            if (item == null) {
-                return HttpBadRequest();
-            }
-            var todo = _repository.Get(item.Id);
-            if (todo == null) {
-                return HttpNotFound();
-            }
-
             _repository.Update(item);
             return new ObjectResult(item);
         }
