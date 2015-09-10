@@ -9,15 +9,21 @@
     <table>
         <thead>
             <tr>
-                
+                <th>UserName</th>
+                <th>Email</th>
+                <th>Administrator</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="u in users">
-               
+                <td>{{u.userName}}</td>
+                <td>{{u.email}}</td>
+                <td><i class="fa" ng-class="{'fa-square-o':!u.isAdmin, 'fa-check-square-o':u.isAdmin}"></i></td>
             </tr>
             <tr ng-if="users.length == 0">
                 <td>None</td>
+                <td></td>
+                <td></td>
             </tr>
         </tbody>
     </table>

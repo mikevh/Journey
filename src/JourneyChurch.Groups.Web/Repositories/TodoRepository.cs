@@ -7,7 +7,7 @@ namespace JourneyChurch.Groups.Web.Repositories
 {
     public class TodoRepository : ITodoRepository
     {
-        private DB _db;
+        private readonly DB _db;
 
         public TodoRepository(DB db) {
             _db = db;

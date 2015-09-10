@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using JourneyChurch.Groups.Web.Models;
 using JourneyChurch.Groups.Web.ViewModels.User;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Data.Entity;
 
 namespace JourneyChurch.Groups.Web.Controllers
 {
@@ -14,23 +16,34 @@ namespace JourneyChurch.Groups.Web.Controllers
     public class UsersController : Controller
     {
         private readonly UserManager<JourneyUser> _userManager;
+        private RoleManager<IdentityRole> _roleManager;
 
-        public UsersController(UserManager<JourneyUser> userManager) {
+        public UsersController(UserManager<JourneyUser> userManager, RoleManager<IdentityRole> roleManager  ) {
+            _roleManager = roleManager;
             _userManager = userManager;
 
-            if (!_userManager.Users.Any()) {
+            if (!_roleManager.Roles.Any()) {
+                _roleManager.CreateAsync(new IdentityRole("Administrator")).Wait();
+            }
 
-                var admin = _userManager.CreateAsync(new JourneyUser {UserName = "admin", Email = "mikevh@gmail.com"}).Result;
+            if (!_userManager.Users.Any()) {
+                
+                _userManager.CreateAsync(new JourneyUser {UserName = "admin", Email = "mikevh@gmail.com"}).Wait();
+                var admin = _userManager.FindByNameAsync("admin").Result;
+                _userManager.AddToRoleAsync(admin, "Administrator").Wait();
             }
         }
 
         [HttpGet]
-        public IActionResult GetAll() {
+        public async Task<IActionResult> GetAll() {
+            var adminstrators = await _userManager.GetUsersInRoleAsync("Administrator");
+
             var rv = _userManager.Users.Select(u => new UserViewModel
             {
                 Id = u.Id,
                 UserName = u.UserName,
-                Email = u.Email
+                Email = u.Email,
+                IsAdmin = adminstrators.Contains(u)
             });
 
             return new ObjectResult(rv);
