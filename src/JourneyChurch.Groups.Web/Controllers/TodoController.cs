@@ -21,14 +21,14 @@ namespace JourneyChurch.Groups.Web.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<TodoItem> GetAll() {
+        public IQueryable<TodoItem> GetAll() {
             var rv = _repository.All;
             return rv;
         }
 
         [HttpGet("{id:int}", Name = "GetByIdRoute")]
         public IActionResult GetById(int id) {
-            var item = _repository.Get(id);
+            var item = _repository.Find(id);
             if (item == null) {
                 return HttpNotFound();
             }
@@ -41,7 +41,7 @@ namespace JourneyChurch.Groups.Web.Controllers
             if (!ModelState.IsValid) {
                 return new HttpStatusCodeResult(400);
             }
-            _repository.Add(item);
+            _repository.Upsert(item);
 
             string url = Url.RouteUrl("GetByIdRoute", new { id = item.Id },
                 Request.Scheme, Request.Host.ToUriComponent());
@@ -64,7 +64,7 @@ namespace JourneyChurch.Groups.Web.Controllers
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody]TodoItem item) {
-            _repository.Update(item);
+            _repository.Upsert(item);
             return new ObjectResult(item);
         }
     }

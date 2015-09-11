@@ -8,7 +8,7 @@ namespace JourneyChurch.Groups.Web.Repositories
         DbSet<T> Set { get; }
         IQueryable<T> All { get; }
         T Find(int id);
-        void Delete(int id);
+        bool Delete(int id);
         void Upsert(T obj);
     }
 }

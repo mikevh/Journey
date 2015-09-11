@@ -23,12 +23,14 @@ namespace JourneyChurch.Groups.Web.Repositories
             return Set.SingleOrDefault(x => x.Id == id);
         }
 
-        public void Delete(int id) {
+        public bool Delete(int id) {
             var item = Find(id);
             if (item != null) {
                 Set.Remove(item);
                 DB.SaveChanges();
+                return true;
             }
+            return false;
         }
 
         public void Upsert(T obj) {
