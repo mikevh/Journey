@@ -38,6 +38,7 @@ namespace JourneyChurch.Groups.Web
                 options.OutputFormatters.OfType<JsonOutputFormatter>().First().SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
             services.AddScoped<ITodoRepository, TodoRepository>();
+            services.AddScoped<IGroupRepository, GroupRepository>();
 
             services.AddEntityFramework()
                 .AddSqlServer()

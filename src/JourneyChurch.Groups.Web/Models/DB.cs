@@ -10,5 +10,6 @@ namespace JourneyChurch.Groups.Web.Models
     public class DB : IdentityDbContext<JourneyUser>
     {
         public DbSet<TodoItem> Todos { get; set; }
+        public DbSet<Group> Groups { get; set; }
     }
 }
