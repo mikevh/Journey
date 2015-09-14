@@ -1,20 +1,5 @@
-﻿angular.module('app', ['ngRoute', 'ngResource']);
-
-angular.module('app').directive('mvMenu', function() {
-    return {
-        templateUrl: 'menuTemplate.html'
-    };
-});
-
-
-angular.module('app').factory('Todo', function ($resource) {
-    return $resource('/api/todo/:id', { id: '@id' }, { 'update': { method: 'PUT' } }
-    );
-});
-
-
-angular.module('app').controller('ctrl', function ($scope, Todo) {
-
+﻿angular.module('app').controller('todoController', function ($scope, Todo) {
+    
     $scope.saveNew = function () {
         var entry = new Todo();
         angular.extend(entry, $scope.n);
@@ -60,8 +45,9 @@ angular.module('app').controller('ctrl', function ($scope, Todo) {
         t.isDone = !t.isDone;
         t.$update();
     }
-
+    
     Todo.query().$promise.then(function (data) {
         $scope.todos = data;
     });
+    
 });
