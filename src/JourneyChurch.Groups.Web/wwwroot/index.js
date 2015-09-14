@@ -1,12 +1,19 @@
-﻿var app = angular.module('app', ['ngRoute', 'ngResource']);
+﻿angular.module('app', ['ngRoute', 'ngResource']);
 
-app.factory('Todo', function ($resource) {
+angular.module('app').directive('mvMenu', function() {
+    return {
+        templateUrl: 'menuTemplate.html'
+    };
+});
+
+
+angular.module('app').factory('Todo', function ($resource) {
     return $resource('/api/todo/:id', { id: '@id' }, { 'update': { method: 'PUT' } }
     );
 });
 
 
-app.controller('ctrl', function ($scope, Todo) {
+angular.module('app').controller('ctrl', function ($scope, Todo) {
 
     $scope.saveNew = function () {
         var entry = new Todo();
