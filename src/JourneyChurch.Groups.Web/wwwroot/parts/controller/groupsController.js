@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('groupsController', function ($scope, $locale, Group) {
+﻿angular.module('app').controller('groupsController', function ($scope, $locale, $location, Group) {
 
     $scope.daysOfWeek = _.map($locale.DATETIME_FORMATS.DAY, function (x, i) {
         return { Id: i, Name: x };
@@ -6,6 +6,10 @@
 
     $scope.dayOfWeekName = function(i) {
         return $locale.DATETIME_FORMATS.DAY[i];
+    };
+
+    $scope.editGroup = function(g) {
+        $location.path('/group/' + g.id);
     };
 
     $scope.saveNew = function () {

@@ -13,10 +13,10 @@
         <tbody>
             <tr ng-repeat="g in groups">
                 <td>{{g.id}}</td>
-                <td>{{g.name}}</td>
+                <td ng-click="editGroup(g)">{{g.name}}</td>
                 <td>{{g.leader}}</td>
                 <td>{{dayOfWeekName(g.meetsOn)}}</td>
-                <td>{{g.meetsAt}}</td>
+                <td>{{g.meetsAt | date : 'shortTime' }}</td>
             </tr>
             <tr ng-if="groups.length == 0">
                 <td>None</td>
