@@ -1,4 +1,12 @@
-﻿angular.module('app').controller('groupsController', function ($scope, Group) {
+﻿angular.module('app').controller('groupsController', function ($scope, $locale, Group) {
+
+    $scope.daysOfWeek = _.map($locale.DATETIME_FORMATS.DAY, function (x, i) {
+        return { Id: i, Name: x };
+    });
+
+    $scope.dayOfWeekName = function(i) {
+        return $locale.DATETIME_FORMATS.DAY[i];
+    };
 
     $scope.saveNew = function () {
         var entry = new Group();
@@ -16,7 +24,8 @@
     $scope.add = function () {
         $scope.n = {
             name: '',
-            leader: ''
+            leader: '',
+            meetsOn: 4
         };
         $scope.showNew = true;
     };
@@ -28,7 +37,6 @@
         });
     }
 
-    console.log('g');
     Group.query().$promise.then(function (data) {
         $scope.groups = data;
     });
