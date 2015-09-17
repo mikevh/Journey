@@ -10,10 +10,21 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md6">
-            Meets On <select ng-options="o.Id as o.Name for o in daysOfWeek" ng-model="e.meetsOn"></select>
+        <div class="col-md-6">
+            Meets On <select class="form-control" ng-options="o.Id as o.Name for o in daysOfWeek" ng-model="e.meetsOn"></select>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            Meets At <input type="text" class="form-control" ng-model="e.meetsAt"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            Notes <textarea ng-model="e.notes" class="form-control"></textarea>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-6">
             <button type="button" class="btn btn-primary" ng-click="save()">Save</button>

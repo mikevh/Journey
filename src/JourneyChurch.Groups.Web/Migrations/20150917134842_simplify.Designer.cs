@@ -9,9 +9,14 @@ using Microsoft.Data.Entity.SqlServer.Metadata;
 namespace JourneyChurch.Groups.Web.Migrations
 {
     [DbContext(typeof(DB))]
-    partial class DBModelSnapshot : ModelSnapshot
+    partial class simplify
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        public override string Id
+        {
+            get { return "20150917134842_simplify"; }
+        }
+
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .Annotation("ProductVersion", "7.0.0-beta7-15540")
@@ -29,8 +34,6 @@ namespace JourneyChurch.Groups.Web.Migrations
                     b.Property<int>("MeetsOn");
 
                     b.Property<string>("Name");
-
-                    b.Property<string>("Notes");
 
                     b.Key("Id");
                 });

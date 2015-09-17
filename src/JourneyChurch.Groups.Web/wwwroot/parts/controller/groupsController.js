@@ -29,7 +29,8 @@
         $scope.n = {
             name: '',
             leader: '',
-            meetsOn: 4
+            meetsOn: 4,
+            notes: ''
         };
         $scope.showNew = true;
     };

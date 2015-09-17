@@ -11,7 +11,8 @@ namespace JourneyChurch.Groups.Web.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Leader { get; set; }
-        public DayOfWeek MeetsOn { get; set; }
-        public DateTime MeetsAt { get; set; }
+        public int MeetsOn { get; set; }
+        public string MeetsAt { get; set; }
+        public string Notes { get; set; }
     }
 }
