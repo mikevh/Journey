@@ -39,6 +39,7 @@ namespace JourneyChurch.Groups.Web
             });
             services.AddScoped<ITodoRepository, TodoRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
+            services.AddScoped<IMeetingRepository, MeetingRepository>();
 
             services.AddEntityFramework()
                 .AddSqlServer()
