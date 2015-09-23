@@ -7,7 +7,7 @@ using Microsoft.Data.Entity;
 
 namespace JourneyChurch.Groups.Web.Repositories
 {
-    public abstract class Repository<T> where T : class, IHasId
+    public abstract class Repository<T> : IDisposable where T : class, IHasId
     {
         protected readonly DB DB;
 
@@ -15,15 +15,15 @@ namespace JourneyChurch.Groups.Web.Repositories
             DB = db;
         }
 
-        public DbSet<T> Set => DB.Set<T>();
+        public virtual DbSet<T> Set => DB.Set<T>();
 
-        public IQueryable<T> All => Set.AsQueryable();
+        public virtual IQueryable<T> All => Set.AsQueryable();
 
-        public T Find(int id) {
+        public virtual T Find(int id) {
             return Set.SingleOrDefault(x => x.Id == id);
         }
 
-        public bool Delete(int id) {
+        public virtual bool Delete(int id) {
             var item = Find(id);
             if (item != null) {
                 Set.Remove(item);
@@ -33,7 +33,7 @@ namespace JourneyChurch.Groups.Web.Repositories
             return false;
         }
 
-        public void Upsert(T obj) {
+        public virtual void Upsert(T obj) {
             if (obj.Id != default(int)) {
                 DB.Entry(obj).State = EntityState.Modified;
             }
@@ -41,6 +41,10 @@ namespace JourneyChurch.Groups.Web.Repositories
                 Set.Add(obj);
             }
             DB.SaveChanges();
+        }
+
+        public virtual void Dispose() {
+            DB.Dispose();
         }
     }
 }
