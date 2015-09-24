@@ -18,3 +18,38 @@ angular.module('app').factory('Group', function ($resource) {
     return $resource('/api/group/:id', { id: '@id' }, { 'update': { method: 'PUT' } }
     );
 });
+app.factory('Alert', function($rootScope) {
+    $rootScope.alerts = [];
+
+    var add = function (message) {
+        $rootScope.alerts.push({ message: message });
+    };
+
+    var clear = function() {
+        $rootScope.alerts = [];
+    };
+
+    return {
+        add: add,
+        clear: clear
+    };
+});
+
+app.factory('AuthorizationRedirectInterceptor', function ($q, $window, Alert) {
+    return {
+        responseError: function (responseError) {
+            //if (responseError.status === 401) { // authentication issue
+            //    $window.location = "/login?redirectUrl=" + encodeURIComponent(document.URL);
+            //    return null;
+            //}
+            if (responseError.status === 404) {
+                Alert.add("Error 404: " + responseError.config.method + " " + responseError.config.url);
+            }
+            return $q.reject(responseError);
+        }
+    };
+});
+
+app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('AuthorizationRedirectInterceptor');
+});
