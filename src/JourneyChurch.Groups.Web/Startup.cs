@@ -58,6 +58,7 @@ namespace JourneyChurch.Groups.Web
             //        name: "default",
             //        template: "{controller=Home}/{action=Index}/{id?}");
             //});
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc();
             //app.UseWelcomePage();
