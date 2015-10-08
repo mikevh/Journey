@@ -1,0 +1,22 @@
+﻿<div class="row">
+    <div class="col-sm-2">
+        {{leftTitle}}
+        <select class="form-control"
+                style="height: 100px"
+                multiple="multiple"
+                ng-options="o as o.name for o in left"
+                ng-model="leftSelected"></select>
+    </div>
+    <div class="col-sm-2">
+        <button type="button" class="form-control" ng-click="add()"><i class="fa fa-arrow-right"></i></button>
+        <button type="button" class="form-control" ng-click="remove()"><i class="fa fa-arrow-left"></i></button>
+    </div>
+    <div class="col-sm-2">
+        {{rightTitle}}
+        <select class="form-control"
+                style="height: 100px"
+                multiple="multiple"
+                ng-options="o as o.name for o in right"
+                ng-model="rightSelected"></select>
+    </div>
+</div>
