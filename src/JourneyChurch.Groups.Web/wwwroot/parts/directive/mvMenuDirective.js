@@ -1,5 +1,6 @@
 ﻿angular.module('app').directive('mvMenu', function () {
     return {
-        templateUrl: 'parts/template/menuTemplate.html'
+        templateUrl: 'parts/template/menuTemplate.html',
+        controller: 'mvMenuController'
     };
 });
