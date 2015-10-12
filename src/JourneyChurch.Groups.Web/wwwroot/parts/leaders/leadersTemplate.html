@@ -1,0 +1,28 @@
+﻿<div class="container" role="main">
+    <div class="row">
+        <h1>Leaders</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Leader for</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="l in leaders" ng-click="edit(l)">
+                        <td><button class="btn btn-link" ng-click="edit(l)">{{l.name || 'name'}}</button></td>
+                        <td>{{l.email}}</td>
+                        <td></td>
+                    </tr>
+                    <tr ng-if="leaders.length == 0">
+                        <td>None</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

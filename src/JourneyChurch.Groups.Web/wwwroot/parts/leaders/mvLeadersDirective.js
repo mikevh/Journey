@@ -1,6 +1,6 @@
 angular.module('app').directive('mvLeaders', function () {
     return {
-        templateUrl: 'parts/template/leadersTemplate.html',
+        templateUrl: 'parts/leaders/leadersTemplate.html',
         controller: 'leadersController'
     };
 });

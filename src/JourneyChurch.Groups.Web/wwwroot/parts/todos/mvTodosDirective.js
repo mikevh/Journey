@@ -1,6 +1,6 @@
 ﻿angular.module('app').directive('mvTodos', function () {
     return {
-        templateUrl: 'parts/template/todosTemplate.html',
+        templateUrl: 'parts/todos/todosTemplate.html',
         controller: 'todoController'
     };
 });
