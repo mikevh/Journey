@@ -1,27 +1,37 @@
 ﻿<div class="container" role="main">
+    <div class="row" ng-if="e.id === 0">
+        <div class="col-sm-12">
+            <h1>New Community Group</h1>
+        </div>
+    </div>
     <div class="row">
-        <div class="col-md-6">
-            Name <input class="form-control" type="text" ng-model="e.name"/>
+        <div class="col-sm-6">
+            Name
+            <input class="form-control" type="text" ng-model="e.name" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            Leader
+            <input class="form-control" type="text" ng-model="e.leader" />
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            Leader <input class="form-control" type="text" ng-model="e.leader"/>
+            Meets On
+            <select class="form-control" ng-options="o.Id as o.Name for o in daysOfWeek" ng-model="e.meetsOn"></select>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            Meets On <select class="form-control" ng-options="o.Id as o.Name for o in daysOfWeek" ng-model="e.meetsOn"></select>
+            Meets At
+            <input type="text" class="form-control" ng-model="e.meetsAt" />
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            Meets At <input type="text" class="form-control" ng-model="e.meetsAt"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            Notes <textarea ng-model="e.notes" class="form-control"></textarea>
+            Notes
+            <textarea ng-model="e.notes" class="form-control"></textarea>
         </div>
     </div>
 
