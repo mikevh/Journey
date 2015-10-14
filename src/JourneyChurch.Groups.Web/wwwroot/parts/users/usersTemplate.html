@@ -1,6 +1,6 @@
 ﻿<div class="container" role="main">
     <div class="row">
-        <h1>Leaders</h1>
+        <h1>Users</h1>
     </div>
     <div class="row">
         <div class="col-sm-12">
@@ -13,12 +13,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="l in leaders" ng-click="edit(l)">
-                        <td><button class="btn btn-link" ng-click="edit(l)">{{l.userName || 'name'}}</button></td>
-                        <td>{{l.email}}</td>
+                    <tr ng-if="users.length > 0" ng-repeat="u in users" ng-click="edit(u)">
+                        <td><button class="btn btn-link" ng-click="edit(u)">{{ u.userName || 'name' }}</button></td>
+                        <td>{{ u.email }}</td>
                         <td></td>
                     </tr>
-                    <tr ng-if="leaders.length == 0">
+                    <tr ng-if="users.length == 0">
                         <td>None</td>
                     </tr>
                 </tbody>

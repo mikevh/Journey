@@ -1,19 +1,19 @@
-﻿angular.module('app').controller('leadersEditController', function ($scope, $routeParams, $location, User) {
+﻿angular.module('app').controller('usersEditController', function ($scope, $routeParams, $location, User) {
     
-    $scope.leaderId = $routeParams.id;
+    $scope.userId = $routeParams.id;
 
     $scope.save = function() {
         $scope.e.$update().then(function() {
-            $location.path('/leaders');
+            $location.path('/users');
         });
     };
 
     $scope.cancel = function () {
-        $location.path('/leaders');
+        $location.path('/users');
     };
 
-    if ($scope.leaderId !== 0) {
-        User.get({ id: $scope.leaderId }).$promise.then(function (data) {
+    if ($scope.userId !== 0) {
+        User.get({ id: $scope.userId }).$promise.then(function (data) {
             $scope.e = data;
         });
     }
