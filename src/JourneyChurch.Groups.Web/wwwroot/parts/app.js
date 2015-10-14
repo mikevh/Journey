@@ -26,7 +26,7 @@ angular.module('app').factory('User', function ($resource) {
     );
 });
 
-angular.module('app').factory('AuthorizationRedirectInterceptor', function ($q, $window, Alert) {
+angular.module('app').factory('AuthorizationRedirectInterceptor', function ($q, $window, Alerter) {
     return {
         responseError: function (responseError) {
             //if (responseError.status === 401) { // authentication issue
@@ -34,7 +34,9 @@ angular.module('app').factory('AuthorizationRedirectInterceptor', function ($q, 
             //    return null;
             //}
             if (responseError.status === 404) {
-                Alert.add("Error 404: " + responseError.config.method + " " + responseError.config.url);
+                Alerter.add("Error 404: " + responseError.config.method + " " + responseError.config.url);
+            } else {
+                Alerter.add("Error status: " + responseError.status);
             }
             return $q.reject(responseError);
         }

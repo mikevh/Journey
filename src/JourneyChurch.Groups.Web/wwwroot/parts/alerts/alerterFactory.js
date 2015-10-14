@@ -1,4 +1,4 @@
-angular.module('app').factory('Alert', function($rootScope) {
+angular.module('app').factory('Alerter', function($rootScope) {
     $rootScope.alerts = [];
 
     var add = function (message) {
