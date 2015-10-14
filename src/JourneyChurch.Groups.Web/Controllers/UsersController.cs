@@ -34,19 +34,43 @@ namespace JourneyChurch.Groups.Web.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id) {
+            var item = await _userManager.FindByIdAsync(id);
+            if (item == null)
+            {
+                return HttpNotFound();
+            
+            }
+            var adminstrators = await _userManager.GetUsersInRoleAsync("Administrator");
+            var rv = item.ToViewModel(adminstrators);
+            return new ObjectResult(rv);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll() {
             var adminstrators = await _userManager.GetUsersInRoleAsync("Administrator");
 
-            var rv = _userManager.Users.Select(u => new UserViewModel
-            {
-                Id = u.Id,
-                UserName = u.UserName,
-                Email = u.Email,
-                IsAdmin = adminstrators.Contains(u)
-            });
-
+            var rv = _userManager.Users.ToViewModel(adminstrators);
             return new ObjectResult(rv);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, [FromBody]UserViewModel item) {
+            var user = await _userManager.FindByIdAsync(id);
+            var adminstrators = await _userManager.GetUsersInRoleAsync("Administrator");
+
+            if (item.IsAdmin == false && adminstrators.Contains(user)) {
+                await _userManager.RemoveFromRoleAsync(user, "Administrator");
+            }
+            else if (item.IsAdmin && !adminstrators.Contains(user)) {
+                await _userManager.AddToRoleAsync(user, "Administrator");
+            }
+            user.Email = item.Email;
+            user.UserName = item.UserName;
+            await _userManager.UpdateAsync(user);
+
+            return await GetById(id);
         }
     }
 }

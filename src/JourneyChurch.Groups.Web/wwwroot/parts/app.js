@@ -4,8 +4,8 @@ angular.module('app').config(function($routeProvider) {
     var routes = [
         { url: '/groups', config: { template: '<mv-groups></mv-groups>' } },
         { url: '/leaders', config: { template: '<mv-leaders></mv-leaders>'} },
-        { url: '/groups/:id', config: { templateUrl: 'parts/template/groupsEditTemplate.html', controller: 'groupsEditController' } },
-        { url: '/leaders/:id', config: { templateUrl: 'parts/template/leadersEditTemplate.html', controller: 'leadersEditController' } }
+        { url: '/groups/:id', config: { templateUrl: 'parts/groups/groupsEditTemplate.html', controller: 'groupsEditController' } },
+        { url: '/leaders/:id', config: { templateUrl: 'parts/leaders/leadersEditTemplate.html', controller: 'leadersEditController' } }
     ];
     _.each(routes, function (x) { $routeProvider.when(x.url, x.config); });
     $routeProvider.otherwise({ redirectTo: '/groups' });
