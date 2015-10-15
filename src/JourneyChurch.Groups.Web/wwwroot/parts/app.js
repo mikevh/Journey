@@ -1,4 +1,4 @@
-﻿angular.module('app', ['ngRoute', 'ngResource']);
+﻿angular.module('app', ['ngRoute', 'ngResource', 'ui.bootstrap']);
 
 angular.module('app').config(function($routeProvider) {
     var routes = [
@@ -17,11 +17,11 @@ angular.module('app').config(function($routeProvider) {
 // });
 
 angular.module('app').factory('Group', function ($resource) {
-    return $resource('/api/group/:id', { id: '@id' }, { 'update': { method: 'PUT' } }
+    return $resource('/api/group/:id', { id: '@id' }, { 'update': { method: 'PUT' } } 
     );
 });
 
-angular.module('app').factory('User', function ($resource) {
+angular.module('app').factory('User', function ($resource) { 
     return $resource('/api/users/:id', { id: '@id' }, { 'update': { method: 'PUT' } }
     );
 });
