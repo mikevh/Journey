@@ -34,8 +34,8 @@ namespace JourneyChurch.Groups.Web.Controllers
             _repository.Upsert(item);
 
             var url = Url.RouteUrl("GetByIdRoute", new { id = item.Id }, Request.Scheme, Request.Host.ToUriComponent());
-            Context.Response.StatusCode = 201;
-            Context.Response.Headers["Location"] = url;
+            Response.StatusCode = 201;
+            Response.Headers["Location"] = url;
             return new ObjectResult(item);
         }
 

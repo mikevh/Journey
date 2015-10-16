@@ -9,6 +9,7 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Formatters;
 using Microsoft.Data.Entity;
 using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
@@ -24,8 +25,9 @@ namespace JourneyChurch.Groups.Web
         public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv) {
             // Setup configuration sources.
 
-            var builder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
-                .AddJsonFile("config.json")
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(appEnv.ApplicationBasePath)
+                .AddJsonFile("appsettings.json")
                 .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
 
             builder.AddEnvironmentVariables();
@@ -35,7 +37,11 @@ namespace JourneyChurch.Groups.Web
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services) {
             services.AddMvc(options => {
-                options.OutputFormatters.OfType<JsonOutputFormatter>().First().SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.OutputFormatters
+                .OfType<JsonOutputFormatter>()
+                .First()
+                .SerializerSettings
+                .ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
             services.AddScoped<ITodoRepository, TodoRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
@@ -58,6 +64,7 @@ namespace JourneyChurch.Groups.Web
             //        name: "default",
             //        template: "{controller=Home}/{action=Index}/{id?}");
             //});
+            
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc();
