@@ -2,13 +2,13 @@
     <div class="row">
         <div class="col-sm-6">
             Name
-            <input class="form-control" type="text" ng-model="e.userName" />
+            <input class="form-control" type="text" ng-model="e.userName"/>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-6">
             User
-            <input class="form-control" type="text" ng-model="e.email" />
+            <input class="form-control" type="text" ng-model="e.email"/>
         </div>
     </div>
     <div class="row">
@@ -21,9 +21,15 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-sm-6">
+            <button type="button" class="btn btn-default" ng-click="changePassword()">Set Password</button>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <button type="button" class="btn btn-primary" ng-click="save()">Save</button>
             <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+            <button type="button" class="btn btn-danger" ng-click="saveNew()">new</button>
         </div>
     </div>
 </div>

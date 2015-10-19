@@ -18,7 +18,8 @@ namespace JourneyChurch.Groups.Web.Controllers
         private readonly UserManager<JourneyUser> _userManager;
         private RoleManager<IdentityRole> _roleManager;
 
-        public UsersController(UserManager<JourneyUser> userManager, RoleManager<IdentityRole> roleManager  ) {
+
+        public UsersController(UserManager<JourneyUser> userManager, RoleManager<IdentityRole> roleManager) {
             _roleManager = roleManager;
             _userManager = userManager;
 
@@ -26,12 +27,12 @@ namespace JourneyChurch.Groups.Web.Controllers
                 _roleManager.CreateAsync(new IdentityRole("Administrator")).Wait();
             }
 
-            if (!_userManager.Users.Any()) {
+            //if (!_userManager.Users.Any()) {
                 
-                _userManager.CreateAsync(new JourneyUser {UserName = "admin", Email = "mikevh@gmail.com"}).Wait();
-                var admin = _userManager.FindByNameAsync("admin").Result;
-                _userManager.AddToRoleAsync(admin, "Administrator").Wait();
-            }
+            //    _userManager.CreateAsync(new JourneyUser {UserName = "admin", Email = "mikevh@gmail.com"}).Wait();
+            //    var admin = _userManager.FindByNameAsync("admin").Result;
+            //    _userManager.AddToRoleAsync(admin, "Administrator").Wait();
+            //}
         }
 
         [HttpGet("{id}")]
@@ -55,6 +56,29 @@ namespace JourneyChurch.Groups.Web.Controllers
             return new ObjectResult(rv);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateTodoItem([FromBody] UserViewModel item) {
+            var user = new JourneyUser {UserName = item.UserName, Email = item.Email};
+            var result = await _userManager.CreateAsync(user, item.ResetPassword);
+
+            var ok = await _userManager.CheckPasswordAsync(user, "Pass@word2");
+
+            if (item.UserName.StartsWith("admin")) {
+                await _userManager.AddToRoleAsync(user, "Administrator");
+            }
+
+            var url = Url.RouteUrl("GetByIdRoute", new { id = item.Id }, Request.Scheme, Request.Host.ToUriComponent());
+            Context.Response.StatusCode = 201;
+            Context.Response.Headers["Location"] = url;
+            return new ObjectResult(item);
+        }
+
+        [HttpPut("{id}")]
+        [Route("/")]
+        public async Task<IActionResult> UpdatePassword(string id, [FromBody] UpdatePasswordViewModel model) {
+            
+        }
+            
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, [FromBody]UserViewModel item) {
             var user = await _userManager.FindByIdAsync(id);
@@ -68,6 +92,14 @@ namespace JourneyChurch.Groups.Web.Controllers
             }
             user.Email = item.Email;
             user.UserName = item.UserName;
+
+            if (item.ResetPassword != null) {
+                await _userManager.RemovePasswordAsync(user);
+                var result = await _userManager.AddPasswordAsync(user, item.ResetPassword);
+            }
+
+            var ok = await _userManager.CheckPasswordAsync(user, "Pass@word3");
+            Console.WriteLine(ok);
             await _userManager.UpdateAsync(user);
 
             return await GetById(id);

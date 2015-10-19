@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using JourneyChurch.Groups.Web.Models;
@@ -12,6 +13,7 @@ namespace JourneyChurch.Groups.Web.ViewModels.User
         public string UserName { get; set; }
         public string Email { get; set; }
         public bool IsAdmin { get; set; }
+        public string ResetPassword { get; set; }
     }
 
     public static class Extentions
