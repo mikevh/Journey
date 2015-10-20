@@ -57,7 +57,7 @@ namespace JourneyChurch.Groups.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTodoItem([FromBody] UserViewModel item) {
+        public async Task<IActionResult> Create([FromBody] UserViewModel item) {
             var user = new JourneyUser {UserName = item.UserName, Email = item.Email};
             var result = await _userManager.CreateAsync(user, item.ResetPassword);
 
@@ -68,17 +68,11 @@ namespace JourneyChurch.Groups.Web.Controllers
             }
 
             var url = Url.RouteUrl("GetByIdRoute", new { id = item.Id }, Request.Scheme, Request.Host.ToUriComponent());
-            Context.Response.StatusCode = 201;
-            Context.Response.Headers["Location"] = url;
+            Response.StatusCode = 201;
+            Response.Headers["Location"] = url;
             return new ObjectResult(item);
         }
 
-        [HttpPut("{id}")]
-        [Route("/")]
-        public async Task<IActionResult> UpdatePassword(string id, [FromBody] UpdatePasswordViewModel model) {
-            
-        }
-            
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, [FromBody]UserViewModel item) {
             var user = await _userManager.FindByIdAsync(id);
@@ -98,8 +92,6 @@ namespace JourneyChurch.Groups.Web.Controllers
                 var result = await _userManager.AddPasswordAsync(user, item.ResetPassword);
             }
 
-            var ok = await _userManager.CheckPasswordAsync(user, "Pass@word3");
-            Console.WriteLine(ok);
             await _userManager.UpdateAsync(user);
 
             return await GetById(id);
