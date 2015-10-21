@@ -51,8 +51,13 @@ namespace JourneyChurch.Groups.Web
                 .AddSqlServer()
                 .AddDbContext<DB>(o => o.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
-            services.AddIdentity<JourneyUser, IdentityRole>()
-                .AddEntityFrameworkStores<DB>()
+            services.AddIdentity<JourneyUser, IdentityRole>(o => {
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireNonLetterOrDigit = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequiredLength = 3;
+                }).AddEntityFrameworkStores<DB>()
                 .AddDefaultTokenProviders();
         }
 

@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('usersEditController', function($scope, $routeParams, $location, $uibModal, Alerter, User) {
+﻿angular.module('app').controller('usersEditController', function($scope, $routeParams, $location, $uibModal, Alerter, User, UserRPC) {
 
     $scope.userId = $routeParams.id;
 
@@ -17,19 +17,7 @@
         });
 
         modalInstance.result.then(function (password) {
-            $scope.e.resetPassword = password;
-        });
-    };
-
-    $scope.saveNew = function() {
-        var x = new User();
-        x.userName = 'admin2';
-        x.email = 'foo@bar.com';
-        x.resetPassword = 'Pass@word2';
-        x.$save().then(function(data) {
-            debugger;
-        }, function(err) {
-            deugger;
+            UserRPC.updatePassword($scope.e.id, password);
         });
     };
 

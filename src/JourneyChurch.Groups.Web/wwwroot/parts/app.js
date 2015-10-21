@@ -35,6 +35,8 @@ angular.module('app').factory('AuthorizationRedirectInterceptor', function ($q, 
             //}
             if (responseError.status === 404) {
                 Alerter.add("Error 404: " + responseError.config.method + " " + responseError.config.url);
+            } else if (responseError.data) {
+                Alerter.add(responseError.data);
             } else {
                 Alerter.add("Error status: " + responseError.status);
             }

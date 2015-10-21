@@ -59,9 +59,7 @@ namespace JourneyChurch.Groups.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] UserViewModel item) {
             var user = new JourneyUser {UserName = item.UserName, Email = item.Email};
-            var result = await _userManager.CreateAsync(user, item.ResetPassword);
-
-            var ok = await _userManager.CheckPasswordAsync(user, "Pass@word2");
+            var result = await _userManager.CreateAsync(user, item.Password);
 
             if (item.UserName.StartsWith("admin")) {
                 await _userManager.AddToRoleAsync(user, "Administrator");
@@ -71,6 +69,28 @@ namespace JourneyChurch.Groups.Web.Controllers
             Response.StatusCode = 201;
             Response.Headers["Location"] = url;
             return new ObjectResult(item);
+        }
+
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> UpdatePassword(string id, [FromBody]UpdatePasswordViewModel vm) {
+            if (!ModelState.IsValid) {
+                var errorMessage = ModelState["Password"].Errors.First().ErrorMessage;
+                return HttpBadRequest(errorMessage);
+            }
+            var user = await _userManager.FindByIdAsync(id);
+            if(user == null) {
+                return HttpNotFound(); 
+            }
+            if(!string.IsNullOrWhiteSpace(vm.Password)) {
+                await _userManager.RemovePasswordAsync(user);
+                var result = _userManager.AddPasswordAsync(user, vm.Password);
+                if (result.Result == IdentityResult.Success) {
+                    return new HttpOkResult();
+                }
+                var error = result.Result.Errors.First().Description;
+                return HttpBadRequest(error);
+            }
+            return HttpBadRequest();
         }
 
         [HttpPut("{id}")]
@@ -86,11 +106,6 @@ namespace JourneyChurch.Groups.Web.Controllers
             }
             user.Email = item.Email;
             user.UserName = item.UserName;
-
-            if (item.ResetPassword != null) {
-                await _userManager.RemovePasswordAsync(user);
-                var result = await _userManager.AddPasswordAsync(user, item.ResetPassword);
-            }
 
             await _userManager.UpdateAsync(user);
 
