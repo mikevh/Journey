@@ -6,7 +6,7 @@ namespace JourneyChurch.Groups.Web.Controllers
 {
     public abstract class BaseRest<T> : Controller where T : class, IHasId
     {
-        private readonly IRepository<T> _repository;
+        protected readonly IRepository<T> _repository;
 
         protected BaseRest(IRepository<T> repository) {
             _repository = repository;
@@ -27,7 +27,7 @@ namespace JourneyChurch.Groups.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateTodoItem([FromBody] T item) {
+        public virtual IActionResult Post([FromBody] T item) {
             if (!ModelState.IsValid) {
                 return new HttpStatusCodeResult(400);
             }
