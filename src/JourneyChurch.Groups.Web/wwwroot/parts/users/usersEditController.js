@@ -1,6 +1,11 @@
 ﻿angular.module('app').controller('usersEditController', function($scope, $routeParams, $location, $uibModal, Alerter, User, UserRPC) {
 
-    $scope.userId = $routeParams.id;
+    if (isNaN($routeParams.id)) {
+        Alerter.add("Invalid id: " + $routeParams.id);
+        return;
+    }
+    
+    $scope.userId = parseInt($routeParams.id);
 
     $scope.save = function () {
         $scope.e.$update().then(function() {

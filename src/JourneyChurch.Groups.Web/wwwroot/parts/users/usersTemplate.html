@@ -6,23 +6,28 @@
         <div class="col-sm-12">
             <table class="table table-striped table-responsive">
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Leader for</th>
-                    </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Leader for</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr ng-if="users.length > 0" ng-repeat="u in users" ng-click="edit(u)">
-                        <td><button class="btn btn-link" ng-click="edit(u)">{{ u.userName || 'name' }}</button></td>
-                        <td>{{ u.email }}</td>
-                        <td></td>
-                    </tr>
-                    <tr ng-if="users.length == 0">
-                        <td>None</td>
-                    </tr>
+                <tr ng-if="users.length > 0" ng-repeat="u in users" ng-click="edit(u)">
+                    <td><button class="btn btn-link" ng-click="edit(u)">{{ u.userName || 'name' }}</button></td>
+                    <td>{{ u.email }}</td>
+                    <td></td>
+                </tr>
+                <tr ng-if="users.length == 0">
+                    <td>None</td>
+                </tr>
                 </tbody>
             </table>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <button type="button" class="btn btn-default" ng-click="new()"><i class="fa fa-plus fa-2x"></i></button>
+        </div>    
     </div>
 </div>
