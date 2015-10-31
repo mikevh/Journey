@@ -13,7 +13,7 @@
     };
 
     $scope.cancel = function () {
-        $location.path('/');
+        $location.path('/groups');
     };
 
     if($scope.groupId > 0) {

@@ -1,0 +1,46 @@
+﻿<div class="container" role="main">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Add Meeting Report</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            Attendance
+            <input type="text" ng-model="e.attendance">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            Notes
+            <textarea ng-model="e.notes" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <button type="button" class="btn btn-primary" ng-click="save()">Save</button>
+            <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12">Previous Reports for {{group.name}}</div>
+    </div>
+    <div class="row">
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Attendance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="r in reports">
+                    <td>{{r.metOn}}</td>
+                    <td>{{r.attendance}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

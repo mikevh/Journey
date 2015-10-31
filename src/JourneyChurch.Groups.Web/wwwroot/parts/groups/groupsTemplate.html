@@ -6,13 +6,15 @@
                     <th>Group</th>
                     <th>Leader</th>
                     <th>Last Report</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="g in groups" ng-click="editGroup(g)">
-                    <td><button type="button" class="btn btn-link">{{g.name}}</button></td>
+                <tr ng-repeat="g in groups">
+                    <td><button type="button" class="btn btn-link" ng-click="editGroup(g)">{{g.name}}</button></td>
                     <td>{{g.leader}}</td>
                     <td></td>
+                    <td><button class="btn btn-default" ng-click="addReport(g.id)"><i class="fa fa-users"></i> Report</button></td>
                 </tr>
                 <tr ng-if="groups.length == 0">
                     <td>None</td>

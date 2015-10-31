@@ -8,11 +8,16 @@
     //         return $locale.DATETIME_FORMATS.DAY[i];
     //     };
     //
+
+    $scope.addReport = function (id) {
+        $location.path('/meetings/' + id);
+    };
+
     $scope.editGroup = function (g) {
         $location.path('/groups/' + g.id);
-    };
+    }; 
     
-    $scope.newGroup = function() {
+    $scope.newGroup = function () {
         $location.path('/groups/0');
     };
     // 

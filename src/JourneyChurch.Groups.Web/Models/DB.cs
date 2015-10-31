@@ -11,5 +11,6 @@ namespace JourneyChurch.Groups.Web.Models
     {
         public DbSet<TodoItem> Todos { get; set; }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<Meeting> Meetings { get; set; }
     }
 }
