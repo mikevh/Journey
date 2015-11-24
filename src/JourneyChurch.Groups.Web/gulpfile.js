@@ -1,4 +1,5 @@
 ﻿/// <binding BeforeBuild='min' Clean='clean' />
+"use strict";
 
 var gulp = require("gulp"),
     rimraf = require("rimraf"),
@@ -7,11 +8,10 @@ var gulp = require("gulp"),
     uglify = require("gulp-uglify"),
     angularFilesort = require("gulp-angular-filesort"),
     inject = require("gulp-inject"),
-    watch = require("gulp-watch"),
-    project = require("./project.json");
+    watch = require("gulp-watch");
 
 var paths = {
-    webroot: "./" + project.webroot + "/"
+    webroot: "./wwwroot/"
 };
 
 paths.js = paths.webroot + "parts/**/*.js";
@@ -32,7 +32,7 @@ gulp.task("clean:css", function (cb) {
 gulp.task("clean", ["clean:js", "clean:css"]);
 
 gulp.task("min:js", function () {
-    gulp.src([paths.js, "!" + paths.minJs], { base: "." })
+    return gulp.src([paths.js, "!" + paths.minJs], { base: "." })
         .pipe(inject(gulp.src([paths.js]).pipe(angularFilesort())))
         .pipe(concat(paths.concatJsDest))
         //.pipe(uglify())
@@ -40,7 +40,7 @@ gulp.task("min:js", function () {
 });
 
 gulp.task("min:css", function () {
-    gulp.src([paths.css, "!" + paths.minCss])
+    return gulp.src([paths.css, "!" + paths.minCss])
         .pipe(concat(paths.concatCssDest))
         .pipe(cssmin())
         .pipe(gulp.dest("."));
