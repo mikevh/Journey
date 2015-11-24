@@ -12,8 +12,8 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Formatters;
 using Microsoft.Data.Entity;
 using Microsoft.Dnx.Runtime;
-using Microsoft.Framework.Configuration;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 
 namespace JourneyChurch.Groups.Web
@@ -22,11 +22,10 @@ namespace JourneyChurch.Groups.Web
     {
         public IConfigurationRoot Configuration { get; set; }
 
-        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv) {
+        public Startup(IHostingEnvironment env) {
             // Setup configuration sources.
 
             var builder = new ConfigurationBuilder()
-                .SetBasePath(appEnv.ApplicationBasePath)
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true);
 
@@ -77,5 +76,7 @@ namespace JourneyChurch.Groups.Web
             app.UseIdentity();
             
         }
+
+        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
 }
