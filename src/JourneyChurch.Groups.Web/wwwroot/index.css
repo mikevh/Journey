@@ -1,4 +1,16 @@
-﻿body {
-    padding-top: 70px;
-    padding-bottom: 30px;
+﻿.md-toolbar-tools h1 {
+  font-size: inherit;
+  font-weight: inherit;
+  margin: inherit;
+}
+
+md-sidenav.md-locked-open {
+  width: 150px !important;
+  min-width: 150px !important;
+  max-width: 150px !important;
+}
+
+md-toolbar.j-header {
+    border-radius: 3px 3px 0 0;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12)
 }

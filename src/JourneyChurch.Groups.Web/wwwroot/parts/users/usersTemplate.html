@@ -1,33 +1,32 @@
-﻿<div class="container" role="main">
-    <div class="row">
-        <h1>Users</h1>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <table class="table table-striped table-responsive">
-                <thead>
+﻿<div class="md-whiteframe-z1" flex="50">
+    <md-toolbar class="j-header md-primary" flex="100">
+        <div class="md-toolbar-tools">
+            <h3>Users</h3>
+        </div>
+    </md-toolbar>
+
+    <div layout>
+        <table>
+            <thead>
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Leader for</th>
                 </tr>
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
                 <tr ng-if="users.length > 0" ng-repeat="u in users" ng-click="edit(u)">
-                    <td><button class="btn btn-link" ng-click="edit(u)">{{ u.userName || 'name' }}</button></td>
+                    <td><md-button class="md-primary" ng-click="edit(u)">{{ u.userName || 'name' }}</md-button></td>
                     <td>{{ u.email }}</td>
                     <td></td>
                 </tr>
                 <tr ng-if="users.length == 0">
                     <td>None</td>
                 </tr>
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
     </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <button type="button" class="btn btn-default" ng-click="new()"><i class="fa fa-plus fa-2x"></i></button>
-        </div>    
+    <div layout>
+        <md-button aria-label="Add User" class="md-raised md-primary" ng-click="new()"><i class="fa fa-plus"></i> User</md-button>
     </div>
 </div>

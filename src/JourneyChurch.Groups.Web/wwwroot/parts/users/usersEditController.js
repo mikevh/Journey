@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('usersEditController', function($scope, $routeParams, $location, $uibModal, Alerter, User, UserRPC) {
+﻿angular.module('app').controller('usersEditController', function($scope, $routeParams, $location, $mdDialog, Alerter, User, UserRPC) {
 
     if (isNaN($routeParams.id)) {
         Alerter.add("Invalid id: " + $routeParams.id);
@@ -13,17 +13,28 @@
         });
     };
 
-    $scope.changePassword = function() {
+    $scope.changePassword = function(event) {
 
-        var modalInstance = $uibModal.open({
-            animation: true,
+        $mdDialog.show({
+            controller: 'passwordModalController',
             templateUrl: 'parts/users/passwordModalTemplate.html',
-            controller: 'passwordModalController'
-        });
+            parent: angular.element(document.body),
+            targetEvent: event,
+            clickOutsiteToClose: true
 
-        modalInstance.result.then(function (password) {
+        }).then(function(password) {
             UserRPC.updatePassword($scope.e.id, password);
         });
+
+        //var modalInstance = $uibModal.open({
+        //    animation: true,
+        //    templateUrl: 'parts/users/passwordModalTemplate.html',
+        //    controller: 'passwordModalController'
+        //});
+
+        //modalInstance.result.then(function (password) {
+        //    UserRPC.updatePassword($scope.e.id, password);
+        //});
     };
 
     $scope.cancel = function () {

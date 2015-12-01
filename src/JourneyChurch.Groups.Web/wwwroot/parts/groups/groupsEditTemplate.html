@@ -1,44 +1,42 @@
-﻿<div class="container" role="main">
-    <div class="row" ng-if="e.id === 0">
-        <div class="col-sm-12">
-            <h1>New Community Group</h1>
-        </div>
+﻿<div class="md-inline-form">
+    <div layout ng-if="e.id === 0">
+        <h1>New Community Group</h1>
     </div>
-    <div class="row">
-        <div class="col-sm-6">
-            Name
-            <input class="form-control" type="text" ng-model="e.name" />
-        </div>
+    <div layout>
+        <md-input-container>
+            <label>Name</label>
+            <input ng-model="e.name"/>
+        </md-input-container>
     </div>
-    <div class="row">
-        <div class="col-sm-6">
-            Leader
-            <input class="form-control" type="text" ng-model="e.leader" />
-        </div>
+    <div layout>
+        <md-input-container>
+            <label>Leader</label>
+            <input ng-model="e.leader" />
+        </md-input-container>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            Meets On
-            <select class="form-control" ng-options="o.Id as o.Name for o in daysOfWeek" ng-model="e.meetsOn"></select>
-        </div>
+    <div layout>
+        <md-input-container>
+            <label>Meets On</label>
+            <md-select ng-model="e.meetsOn">
+                <md-option ng-repeat="d in daysOfWeek" value="{{d.Id}}">{{d.Name}}</md-option>
+            </md-select>
+        </md-input-container>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            Meets At
-            <input type="text" class="form-control" ng-model="e.meetsAt" />
-        </div>
+    <div layout>
+        <md-input-container>
+            <label>Meets At</label>
+            <input ng-model="e.meetsAt" />
+        </md-input-container>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            Notes
-            <textarea ng-model="e.notes" class="form-control"></textarea>
-        </div>
+    <div layout>
+        <md-input-container class="md-block">
+            <label>Notes</label>
+            <textarea ng-model="e.notes"></textarea>
+        </md-input-container>
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <button type="button" class="btn btn-primary" ng-click="save()">Save</button>
-            <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-        </div>
+    <div layout>
+        <md-button class="md-raised md-primary" ng-click="save()">Save</md-button>
+        <md-button class="md-raised md-default" ng-click="cancel()">Cancel</md-button>
     </div>
 </div>

@@ -1,34 +1,25 @@
-﻿<div class="container" role="main">
-    <div class="row">
-        <div class="col-sm-6">
-            Name
-            <input class="form-control" type="text" ng-model="e.userName"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-            User
-            <input class="form-control" type="text" ng-model="e.email"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-model="e.isAdmin"/> Administrator
-                </label>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <button type="button" class="btn btn-default" ng-click="changePassword()">Set Password</button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <button type="button" class="btn btn-primary" ng-click="save()">Save</button>
-            <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-        </div>
-    </div>
+﻿<div layout>
+    <md-input-container>
+        <label>Username</label>
+        <input ng-model="e.userName"/>
+    </md-input-container>
 </div>
+<div layout>
+    <md-input-container>
+        <label>Email</label>
+        <input ng-model="e.email"/>
+    </md-input-container>
+</div>
+<div layout>
+    <md-input-container>
+        <md-checkbox ng-model="e.isAdmin">Administrator</md-checkbox>
+    </md-input-container>
+</div>
+<div layout>
+        <md-button class="md-raised md-warn" ng-click="changePassword()">Set Password</md-button>
+</div>
+<div layout>
+    <md-button class="md-raised md-primary" ng-click="save()">Save</md-button>
+    <md-button class="md-raised md-default" ng-click="cancel()">Cancel</md-button>
+</div>
+

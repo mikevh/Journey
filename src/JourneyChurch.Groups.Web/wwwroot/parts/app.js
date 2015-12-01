@@ -1,6 +1,6 @@
-﻿angular.module('app', ['ngRoute', 'ngResource', 'ui.bootstrap']);
+﻿angular.module('app', ['ngRoute', 'ngResource', 'ngMaterial']);
 
-angular.module('app').config(function($routeProvider) {
+angular.module('app').config(function($routeProvider) { 
     var routes = [
         { url: '/groups', config: { template: '<mv-groups></mv-groups>' } },
         { url: '/users', config: { template: '<users></users>'} },
@@ -23,7 +23,7 @@ angular.module('app').factory('Group', function ($resource) {
 });
 
 angular.module('app').factory('User', function ($resource) { 
-    return $resource('/api/users/:id', { id: '@id' }, { 'update': { method: 'PUT' } }
+    return $resource('/api/users/:id', { id: '@id' }, { 'update': { method: 'PUT' } } 
     ); 
 });
 

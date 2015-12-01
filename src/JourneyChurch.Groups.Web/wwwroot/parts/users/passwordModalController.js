@@ -1,4 +1,5 @@
-﻿angular.module('app').controller('passwordModalController', function ($scope, $modalInstance) {
+﻿angular.module('app').controller('passwordModalController', function ($scope, $mdDialog) {
+
 
     $scope.okIsDisabled = function () {
         return $scope.password === undefined ||
@@ -7,10 +8,14 @@
     };
 
     $scope.modalOk = function () {
-        $modalInstance.close($scope.password);
+        $mdDialog.hide($scope.password);
     };
 
     $scope.modalCancel = function () {
-        $modalInstance.dismiss('cancel');
+        $mdDialog.cancel();
+    };
+
+    $scope.hide = function() {
+        $scope.modalCancel();
     };
 });
