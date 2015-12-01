@@ -32,7 +32,20 @@ angular.module('app').factory('Meeting', function($resource) {
     );
 });
 
-angular.module('app').factory('AuthorizationRedirectInterceptor', function ($q, $window, Alerter) {
+angular.module('app').factory('Toaster', function ($mdToast) {
+    var toast = function (message, time) {
+        $mdToast.show(
+          $mdToast.simple().textContent(message)
+            .position('top right')
+            .hideDelay(time || 3000)
+        );
+    };
+    return {
+        toast: toast 
+    };
+});
+
+angular.module('app').factory('AuthorizationRedirectInterceptor', function ($q, $window, $log) {
     return {
         responseError: function (responseError) {
             //if (responseError.status === 401) { // authentication issue
@@ -40,11 +53,11 @@ angular.module('app').factory('AuthorizationRedirectInterceptor', function ($q, 
             //    return null;
             //}
             if (responseError.status === 404) {
-                Alerter.add("Error 404: " + responseError.config.method + " " + responseError.config.url);
+                $log.error("Error 404: " + responseError.config.method + " " + responseError.config.url);
             } else if (responseError.data) {
-                Alerter.add(responseError.data);
+                $log.error(responseError.data);
             } else {
-                Alerter.add("Error status: " + responseError.status);
+                $log.error("Error status: " + responseError.status);
             }
             return $q.reject(responseError);
         }

@@ -1,7 +1,7 @@
-﻿angular.module('app').controller('usersEditController', function($scope, $routeParams, $location, $mdDialog, Alerter, User, UserRPC) {
+﻿angular.module('app').controller('usersEditController', function($scope, $routeParams, $location, $mdDialog, Toaster, User, UserRPC) {
 
     if (isNaN($routeParams.id)) {
-        Alerter.add("Invalid id: " + $routeParams.id);
+        Toaster.toast("Invalid id: " + $routeParams.id);
         return;
     }
     
