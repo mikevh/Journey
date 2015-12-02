@@ -58,10 +58,13 @@ namespace JourneyChurch.Groups.Web.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] UserViewModel item) {
-            var user = new JourneyUser {UserName = item.UserName, Email = item.Email};
+            var user = new JourneyUser {
+                UserName = item.UserName,
+                Email = item.Email
+            };
             var result = await _userManager.CreateAsync(user, item.Password);
 
-            if (item.UserName.StartsWith("admin")) {
+            if (item.IsAdministrator) {
                 await _userManager.AddToRoleAsync(user, "Administrator");
             }
 
@@ -95,13 +98,17 @@ namespace JourneyChurch.Groups.Web.Controllers
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, [FromBody]UserViewModel item) {
+            if (id == "0") {
+                return await Create(item);
+            }
+
             var user = await _userManager.FindByIdAsync(id);
             var adminstrators = await _userManager.GetUsersInRoleAsync("Administrator");
 
-            if (item.IsAdmin == false && adminstrators.Contains(user)) {
+            if (item.IsAdministrator == false && adminstrators.Contains(user)) {
                 await _userManager.RemoveFromRoleAsync(user, "Administrator");
             }
-            else if (item.IsAdmin && !adminstrators.Contains(user)) {
+            else if (item.IsAdministrator && !adminstrators.Contains(user)) {
                 await _userManager.AddToRoleAsync(user, "Administrator");
             }
             user.Email = item.Email;

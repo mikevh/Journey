@@ -12,7 +12,7 @@ namespace JourneyChurch.Groups.Web.ViewModels.User
         public string Id { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        public bool IsAdmin { get; set; }
+        public bool IsAdministrator { get; set; }
         public string Password { get; set; }
     }
 
@@ -28,7 +28,7 @@ namespace JourneyChurch.Groups.Web.ViewModels.User
                 Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
-                IsAdmin = administrators != null && administrators.Contains(user)
+                IsAdministrator = administrators != null && administrators.Contains(user)
             };
         }
     }

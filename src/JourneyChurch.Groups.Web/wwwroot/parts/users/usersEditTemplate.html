@@ -12,14 +12,14 @@
 </div>
 <div layout>
     <md-input-container>
-        <md-checkbox ng-model="e.isAdmin">Administrator</md-checkbox>
+        <md-checkbox ng-model="e.isAdministrator">Administrator</md-checkbox>
     </md-input-container>
 </div>
 <div layout>
-        <md-button class="md-raised md-warn" ng-click="changePassword()">Set Password</md-button>
+        <md-button class="md-raised md-warn" ng-click="changePassword($event)">Set Password</md-button>
 </div>
 <div layout>
-    <md-button class="md-raised md-primary" ng-click="save()">Save</md-button>
+    <md-button class="md-raised md-primary" ng-disabled="is_save_button_disabled()" ng-click="save()">Save</md-button>
     <md-button class="md-raised md-default" ng-click="cancel()">Cancel</md-button>
 </div>
 

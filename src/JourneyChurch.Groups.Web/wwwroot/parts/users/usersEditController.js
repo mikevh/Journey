@@ -1,59 +1,55 @@
 ﻿angular.module('app').controller('usersEditController', function($scope, $routeParams, $location, $mdDialog, Toaster, User, UserRPC) {
 
-    if (isNaN($routeParams.id)) {
-        Toaster.toast("Invalid id: " + $routeParams.id);
-        return;
-    }
-    
-    $scope.userId = parseInt($routeParams.id);
+    $scope.userId = $routeParams.id;
+    var edit_mode = $scope.userId !== 0;
 
     $scope.save = function () {
         $scope.e.$update().then(function() {
             $location.path('/users');
+        }, function(err) {
+            Toaster.toast(err.statusText);
         });
     };
 
     $scope.changePassword = function(event) {
-
         $mdDialog.show({
             controller: 'passwordModalController',
             templateUrl: 'parts/users/passwordModalTemplate.html',
             parent: angular.element(document.body),
             targetEvent: event,
             clickOutsiteToClose: true
-
         }).then(function(password) {
-            UserRPC.updatePassword($scope.e.id, password);
+            if (edit_mode) {
+                UserRPC.updatePassword($scope.e.id, password);
+            } else {
+                $scope.e.password = password;
+            }
         });
-
-        //var modalInstance = $uibModal.open({
-        //    animation: true,
-        //    templateUrl: 'parts/users/passwordModalTemplate.html',
-        //    controller: 'passwordModalController'
-        //});
-
-        //modalInstance.result.then(function (password) {
-        //    UserRPC.updatePassword($scope.e.id, password);
-        //});
     };
+
+    $scope.is_save_button_disabled = function() {
+        return !edit_mode && $scope.e.password === undefined;
+    };
+
+    $scope.$watch('e', function(x) { console.log(x); }, true);
 
     $scope.cancel = function () {
         $location.path('/users');
     };
 
-    if ($scope.userId !== 0) {
+    if (edit_mode) {
         User.get({ id: $scope.userId }).$promise.then(function (data) {
             $scope.e = data; 
         });
     }
     else {
-        console.log('not implemented');
         $scope.e = new User();
         angular.extend($scope.e,
         {
             id: 0,
-            name: 's',
-            leader: 'sd' 
+            userName: '',
+            email: '',
+            isAdministrator: false
         });
     }
 });
