@@ -3,7 +3,7 @@
 
 var gulp = require("gulp"),
     rimraf = require("rimraf"),
-    concat = require("gulp-concat"),
+    concat = require("gulp-concat-util"),
     cssmin = require("gulp-cssmin"),
     uglify = require("gulp-uglify"),
     angularFilesort = require("gulp-angular-filesort"),
@@ -36,6 +36,7 @@ gulp.task("min:js", function () {
         .pipe(inject(gulp.src([paths.js]).pipe(angularFilesort())))
         .pipe(concat(paths.concatJsDest))
         //.pipe(uglify())
+        .pipe(concat.header("'use strict';\n"))
         .pipe(gulp.dest("."));
 });
 
