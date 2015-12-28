@@ -36,7 +36,7 @@ gulp.task("min:js", function () {
         .pipe(inject(gulp.src([paths.js]).pipe(angularFilesort())))
         .pipe(concat(paths.concatJsDest))
         //.pipe(uglify())
-        .pipe(concat.header("'use strict';\n"))
+        .pipe(concat.header(""))
         .pipe(gulp.dest("."));
 });
 
