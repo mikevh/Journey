@@ -1,6 +1,6 @@
 ﻿(function () {
     'use strict';
-    angular.module('app').controller('groupsEditController', function ($scope, $locale, $routeParams, $location, Group) {
+    angular.module('app').controller('groupsEditController', function ($scope, $locale, $routeParams, $location, GroupData) {
     
         $scope.groupId = $routeParams.id;
 

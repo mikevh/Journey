@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="lib/angular-material/angular-material.min.css" rel="stylesheet" />
+    <link href="lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="index.css" rel="stylesheet" />
+</head>
+<body>
+
+    <form ng-submit="login()">
+        <div ng-app="app" ng-controller="loginCtrl" layout-align="center center" ng-cloak class="md-form">
+            <md-content md-theme="docs-dark">
+                <md-input-container>
+                    <label>Username</label>
+                    <input ng-model="user.username">
+                </md-input-container>
+                <md-input-container>
+                    <label>Email</label>
+                    <input ng-model="user.password" type="password">
+                </md-input-container>
+
+            </md-content>
+        </div>
+    </form>
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular-animate/angular-animate.min.js"></script>
+    <script src="lib/angular-aria/angular-aria.min.js"></script>
+    <script src="lib/angular-route/angular-route.min.js"></script>
+    <script src="lib/angular-resource/angular-resource.min.js"></script>
+    <script src="lib/angular-material/angular-material.min.js"></script>
+    <script src="lib/underscore/underscore-min.js"></script>
+    <script>
+        var app = angular.module('app', ['ngMaterial']);
+
+        app.factory('login', function ($http) {
+            var login = function (user, pass) {
+                return $http.post('/Account/Login', {
+                    email: user,
+                    password: pass
+                });
+            };
+
+            return {
+                login: login
+            };
+        });
+
+        app.controller('loginCtrl', function ($scope, $window, login) {
+            $scope.login = function () {
+                var x = login.login($scope.user, $scope.pass);
+                debugger;
+            };
+        });
+    </script>
+
+</body>
+</html>

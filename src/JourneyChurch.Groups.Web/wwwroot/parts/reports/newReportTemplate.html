@@ -1,0 +1,42 @@
+﻿<div class="md-inline-form">
+    <div layout>
+        <h1>New Report for {{group.name}}</h1>
+    </div>
+    <div layout>
+        <md-input-container>
+            <label>Date</label>
+            <input ng-model="e.date" />
+        </md-input-container>
+    </div>
+    <div layout>
+        <md-input-container>
+            <label>Attendees</label>
+            <input ng-model="attendee_name" />
+        </md-input-container>
+    </div>
+    <!--<div layout>
+        <md-input-container>
+            <label>Meets On</label>
+            <md-select ng-model="e.meetsOn">
+                <md-option ng-repeat="d in daysOfWeek" value="{{d.Id}}">{{d.Name}}</md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+    <div layout>
+        <md-input-container>
+            <label>Meets At</label>
+            <input ng-model="e.meetsAt" />
+        </md-input-container>
+    </div>
+    <div layout>
+        <md-input-container class="md-block">
+            <label>Notes</label>
+            <textarea ng-model="e.notes"></textarea>
+        </md-input-container>
+    </div>-->
+
+    <div layout>
+        <md-button class="md-raised md-primary" ng-click="save()">Save</md-button>
+        <md-button class="md-raised md-default" ng-click="cancel()">Cancel</md-button>
+    </div>
+</div>

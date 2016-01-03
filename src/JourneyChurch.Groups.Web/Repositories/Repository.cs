@@ -7,7 +7,16 @@ using Microsoft.Data.Entity;
 
 namespace JourneyChurch.Groups.Web.Repositories
 {
-    public abstract class Repository<T> : IDisposable where T : class, IHasId
+    public interface IRepository<T> where T : class
+    {
+        DbSet<T> Set { get; }
+        IQueryable<T> All { get; }
+        T Find(int id);
+        bool Delete(int id);
+        void Upsert(T obj);
+    }
+
+    public abstract partial class Repository<T> : IDisposable where T : class, IHasId, new()
     {
         protected readonly DB DB;
 

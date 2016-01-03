@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    angular.module('app').controller('groupsController', function ($scope, $locale, $location, Group) {
+    angular.module('app').controller('groupsController', function ($scope, $locale, $location, GroupData) {
 
         //     $scope.daysOfWeek = _.map($locale.DATETIME_FORMATS.DAY, function (x, i) {
         //         return { Id: i, Name: x };
@@ -13,7 +13,7 @@
         //
 
         $scope.addReport = function (id) {
-            $location.path('/meetings/' + id);
+            $location.path('/reports/forgroup/' + id);
         };
 
         $scope.editGroup = function (g) {
@@ -54,8 +54,10 @@
         //         });
         //     }
 
-        Group.query().$promise.then(function (data) {
-            $scope.groups = data;
+        GroupData.latestReports().then(function (result) {
+            $scope.groups = result.data;
+        }, function(err) {
+            console.log(err);
         });
 
     });

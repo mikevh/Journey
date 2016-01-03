@@ -8,21 +8,32 @@
         <table>
             <thead>
             <tr>
-                <th>Group</th>
-                <th>Leader</th>
-                <th>Last Report</th>
                 <th></th>
+                <th>Leader</th>
+                <th>Name</th>
+                <th>Last Report</th>
+                <th>Attendance</th>
+                <th>2M Avg Attenendance</th>
+                <th>Neighborhood</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="g in groups">
-                <td><md-button class="md-primary" ng-click="editGroup(g)">{{g.name}}</md-button></td>
-                <td>{{g.leader}}</td>
-                <td></td>
-                <td><md-button class="md-raised" ng-click="addReport(g.id)"><i class="fa fa-plus"></i> Report</md-button></td>
-            </tr>
+                <tr ng-repeat="g in groups">
+                    <td style="padding-right: 5px">
+                        <md-icon ng-click="addReport(g.groupId)">group_add</md-icon>
+                        <md-icon ng-click="">edit</md-icon>
+                    </td>
+                    <td><a href="/leaders/{{g.leaderId}}">{{g.leader}}</a></td>
+                    <td>{{g.groupName}}</td>
+                    <td><a href="/reports/{{g.lastReportId}}">{{g.lastReportDate}}</a></td>
+                    <td>{{g.lastAttendance}}</td>
+                    <td>{{g.avgAttendance}}</td>
+                    <td>{{g.neighborhood}}</td>
+                    <!--<td><md-button class="md-primary" ng-click="editGroup(g)">{{g.name}}</md-button></td>
+                    <td><md-button class="md-raised" ng-click="addReport(g.id)"><i class="fa fa-plus"></i> Report</md-button></td>-->
+                </tr>
             <tr ng-if="groups.length == 0">
-                <td>None</td>
+                <td>No groups!</td>
             </tr>
             </tbody>
         </table>

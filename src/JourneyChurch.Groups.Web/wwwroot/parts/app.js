@@ -6,7 +6,9 @@
         var routes = [
             { url: '/groups', config: { template: '<mv-groups></mv-groups>' } },
             { url: '/users', config: { template: '<users></users>' } },
-            { url: '/meetings/:id', config: { templateUrl: 'parts/meetings/meetingsTemplate.html', controller: 'meetingsController' } },
+            { url: '/reports/forgroup/:groupId', config: { templateUrl: '/parts/reports/newReportTemplate.html', controller: 'reportController'} },
+            { url: '/reports/:id', config: { templateUrl: '/parts/reports/newReportTemplate.html', controller: 'reportEditController'} },
+            //{ url: '/meetings/:id', config: { templateUrl: 'parts/meetings/meetingsTemplate.html', controller: 'meetingsController' } },
             { url: '/groups/:id', config: { templateUrl: 'parts/groups/groupsEditTemplate.html', controller: 'groupsEditController' } },
             { url: '/users/:id', config: { templateUrl: 'parts/users/usersEditTemplate.html', controller: 'usersEditController' } },
             { url: '/login', config: { templateUrl: 'parts/login/loginForm.html', controller: 'loginController' } }

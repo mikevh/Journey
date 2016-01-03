@@ -42,9 +42,9 @@ namespace JourneyChurch.Groups.Web
                 .SerializerSettings
                 .ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
-            services.AddScoped<ITodoRepository, TodoRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
-            services.AddScoped<IMeetingRepository, MeetingRepository>();
+            services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<IAttendeeRepository, AttendeeRepository>();
 
             services.AddEntityFramework()
                 .AddSqlServer()
@@ -74,7 +74,13 @@ namespace JourneyChurch.Groups.Web
             app.UseMvc();
             //app.UseWelcomePage();
             app.UseIdentity();
-            
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
 
         public static void Main(string[] args) => WebApplication.Run<Startup>(args);
