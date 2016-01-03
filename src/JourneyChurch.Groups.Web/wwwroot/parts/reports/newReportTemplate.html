@@ -3,10 +3,10 @@
         <h1>New Report for {{group.name}}</h1>
     </div>
     <div layout>
-        <md-input-container>
-            <label>Date</label>
-            <input ng-model="e.date" />
-        </md-input-container>
+        <!--<md-input-container>
+        </md-input-container>-->
+            <!--<label>Date</label>-->
+            <md-datepicker ng-model="e.date" md-placeholder="Date"></md-datepicker>
     </div>
     <div layout>
         <md-input-container>
@@ -27,13 +27,13 @@
             <label>Meets At</label>
             <input ng-model="e.meetsAt" />
         </md-input-container>
-    </div>
+    </div>-->
     <div layout>
         <md-input-container class="md-block">
             <label>Notes</label>
-            <textarea ng-model="e.notes"></textarea>
+            <textarea ng-model="e.notes" cols="50"></textarea>
         </md-input-container>
-    </div>-->
+    </div>
 
     <div layout>
         <md-button class="md-raised md-primary" ng-click="save()">Save</md-button>

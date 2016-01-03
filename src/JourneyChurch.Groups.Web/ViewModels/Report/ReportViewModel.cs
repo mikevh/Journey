@@ -12,6 +12,6 @@ namespace JourneyChurch.Groups.Web.ViewModels.Report
         public int GroupId { get; set; }
         public DateTime Date { get; set; }
         public string Notes { get; set; }
-        public IEnumerable<ReportAttendee> Attendees { get; set; }
+        public IEnumerable<AttendeeViewModel> Attendees { get; set; }
     }
 }

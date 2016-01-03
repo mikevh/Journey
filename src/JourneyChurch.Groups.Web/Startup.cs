@@ -6,12 +6,9 @@ using JourneyChurch.Groups.Web.Models;
 using JourneyChurch.Groups.Web.Repositories;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Formatters;
 using Microsoft.Data.Entity;
-using Microsoft.Dnx.Runtime;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
@@ -45,6 +42,7 @@ namespace JourneyChurch.Groups.Web
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<IReportRepository, ReportRepository>();
             services.AddScoped<IAttendeeRepository, AttendeeRepository>();
+            services.AddScoped<IReportAttendeeRepository, ReportAttendeeRepository>();
 
             services.AddEntityFramework()
                 .AddSqlServer()
@@ -62,13 +60,6 @@ namespace JourneyChurch.Groups.Web
 
         public void Configure(IApplicationBuilder app)
         {
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Home}/{action=Index}/{id?}");
-            //});
-            
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc();

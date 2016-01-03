@@ -8,6 +8,12 @@ namespace JourneyChurch.Groups.Web.Models
 {
     public class Group : IHasId
     {
+        public Group() {
+            Name = "";
+            MeetsAt = "";
+            Notes = "";
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public int MeetsOn { get; set; }
