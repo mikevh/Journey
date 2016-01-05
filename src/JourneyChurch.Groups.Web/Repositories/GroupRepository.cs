@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using JourneyChurch.Groups.Web.Models;
 using JourneyChurch.Groups.Web.ViewModels.Group;
+using Microsoft.Data.Entity;
 
 namespace JourneyChurch.Groups.Web.Repositories
 {
@@ -16,24 +18,65 @@ namespace JourneyChurch.Groups.Web.Repositories
             
         }
 
+        private void Foo() {
+
+        }
+
         public IEnumerable<LatestReport> LatestReport() {
 
-            var leader_name_dictionary = DB.Leaders.ToDictionary(l => l.Id, l => l.Name);
+//            var q = @"
 
-            var reports = DB.Groups.Select(g => new LatestReport {
-                GroupName = g.Name,
-                GroupId = g.Id,
-                LeaderId = g.LeaderId ?? 0
-            }).ToList();
+//WITH cte AS(
+//    SELECT Id, ROW_NUMBER() OVER(PARTITION BY GroupId ORDER BY [Date] DESC) latest
+//    FROM Report
+//)
+//SELECT
+//r.Id LatestReportId,
+//r.[Date] LatestReportDate,
+//g.id GroupId,
+//g.Name GroupName,
+//l.Id LeaderId,
+//l.Name Leader,
+//0 Attendance,
+//0 AvgAttendance,
+//0 NeighborhoodId,
+//'' Neighborhood
+//FROM [Group] g
+//LEFT JOIN Report r ON r.GroupId = g.Id
+//LEFT JOIN cte ON r.Id = cte.Id
+//LEFT JOIN Leader l ON l.Id = g.LeaderId
+//WHERE cte.latest IS NULL OR cte.latest = 1	
+	
+//";
+            var z = DB.Set<LatestReport>().FromSql("select * from vw_latestreports").ToList();
 
-            reports.ToList().ForEach(r => {
-                string name;
-                if (leader_name_dictionary.TryGetValue(r.LeaderId, out name)) {
-                    r.Leader = name;
-                }
-            });
+            return z;
 
-            return reports;
+            //var result = DB.Groups.FromSql(q).ToList();
+
+            //var query = from g in DB.Groups
+            //    join l in DB.Leaders
+            //        on g.LeaderId equals l.Id
+            //        into lg
+            //    join r in DB.Reports on g.Id equals r.GroupId into rg
+            //    let rx = rg.Max(x => x.Date)
+            //    from x in lg.DefaultIfEmpty()
+            //    select LatestReport(g, x);
+
+            //var ql = query.ToList();
+
+            //return ql;
         }
+
+        //private LatestReport LatestReport(Group g, Leader x)
+        //{
+        //    return new LatestReport
+        //    {
+        //        Leader = x == null ? "" : x.Name,
+        //        LeaderId = x == null ? 0 : x.Id,
+        //        GroupId = g.Id,
+        //        GroupName = g.Name,
+        //    };
+        //}
     }
 }

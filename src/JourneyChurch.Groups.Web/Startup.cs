@@ -11,6 +11,7 @@ using Microsoft.AspNet.Mvc.Formatters;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 
 namespace JourneyChurch.Groups.Web
@@ -58,8 +59,25 @@ namespace JourneyChurch.Groups.Web
                 .AddDefaultTokenProviders();
         }
 
-        public void Configure(IApplicationBuilder app)
-        {
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logger_factory) {
+            logger_factory.AddConsole(Configuration.GetSection("Logging"));
+            logger_factory.AddDebug();
+
+            if (env.IsDevelopment()) {
+                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    serviceScope.ServiceProvider.GetService<DB>().EnsureSeedData();
+                }
+            }
+
+
+            app.UseDeveloperExceptionPage();
+            app.UseDatabaseErrorPage();
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc();
